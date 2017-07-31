@@ -14,8 +14,8 @@
 
  /*
   * Offsets for individual MIND MPU's are as follows
-  * Data is printed as: acelX acelY acelZ giroX giroY giroZ
-  * *********OFFSETS FOUND BEFORE CONTAINMENT RINGS WERE SECURED, LIKELY INACCURATE************
+  * Data is printed as: acelX acelY acelZ 
+  * *********OFFSETS FOUND BEFORE CONTAINMENT RINGS WERE SECURED************
   * 
   * MPU Central (With plastic tie)  
       accelgyroIC1.setXAccelOffset(-552);

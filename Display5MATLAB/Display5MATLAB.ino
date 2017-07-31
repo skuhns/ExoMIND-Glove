@@ -1,15 +1,17 @@
 //Example code for configuring 6 seperate MPU6050 accelerometers
-/* Author(s): SRIRAM BOPPANA,  Jason Ummel, Samuel Kuhns
-*  Date: 02/19/2017
+/* Author(s): Samuel Kuhns
+*  Date: 07/31/2017
 *  This code is based off the Jeff Rowberg I2Cdev.h and MPU6050.h library files
 *  This code has not been tested and is only for reference
 *
  */
-
+/*
+ * This is used in tandem with the matlab GUI to display 5 bar graphs representing the % extension of the 5 fingers
+ */
  /*
   * Offsets for individual MIND MPU's are as follows
-  * Data is printed as: acelX acelY acelZ giroX giroY giroZ
-  * *********OFFSETS FOUND BEFORE CONTAINMENT RINGS WERE SECURED, LIKELY INACCURATE************
+  * Data is printed as: acelX acelY acelZ 
+  * *********OFFSETS FOUND BEFORE CONTAINMENT RINGS WERE SECURED************
   * 
   * MPU Central (With plastic tie)  
       accelgyroIC1.setXAccelOffset(-552);
@@ -132,10 +134,7 @@ void loop() {
 
 
 void getNumbers() {
-  //emg = analogRead(A1);
-  /*Serial.println("EMG Reading: ");
-  Serial.println(emg);*/
-  //Serial.println("Entering getNumbers()");
+
   for (int c = 1; c <= 7; c++){                            //alter this depending on how many we are reading in (we want 6 eventually)
     //Reset the address of all devices
     digitalWrite(MPU6050_central,HIGH);
@@ -295,9 +294,8 @@ void getNumbers() {
   Serial.println(ac_z);
   */
   
-  delay(10); //40 microsecond delay to prevent simultaneous reading and writing on I2C bus
+  delay(10); //10 microsecond delay to prevent simultaneous reading and writing on I2C bus
   }
-  //Serial.println("Exiting getNumbers()");
 }
 
 

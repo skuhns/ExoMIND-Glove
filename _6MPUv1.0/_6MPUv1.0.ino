@@ -14,8 +14,7 @@
 
  /*
   * Offsets for individual MIND MPU's are as follows
-  * Data is printed as: acelX acelY acelZ giroX giroY giroZ
-  * *********DO NOT TRUST GYRO OFFSETS FROM THIS DATA************
+
   * 
   * MPU Central (With plastic tie)  
       accelgyroIC1.setXAccelOffset(-552);
