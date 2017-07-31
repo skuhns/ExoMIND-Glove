@@ -5,6 +5,12 @@
 *  This code has not been tested and is only for reference
 *
  */
+ 
+ /*
+  * Offsets must be set before each reading
+  * Sensors are set to high and low via the AD0 pin because SCL and SDA are in series.
+  * This code is best used to test the readings of all the sensors simultaneously
+  */
 
  /*
   * Offsets for individual MIND MPU's are as follows
@@ -123,7 +129,7 @@ accelgyroIC2.initialize(); // default I2C address 0x68 when inactive HIGH
 
  
 void loop() {
-
+  //Settling sensors to help ensure accuracy of data
   Serial.println("\nWaiting for sensors to settle");
   for(int i = 0; i < 10; i++) {
     getNumbers();
@@ -133,8 +139,8 @@ void loop() {
         Serial.println("Hold forearm straight out...");
 
   while(state == 0) {
-
-    //THESE NUMBERS ARE GENEROUSE FOR TESTING
+    //Sensing for the z axis forearm accelerometer to be still and level 
+    //THESE NUMBER RANGES ARE GENEROUS FOR TESTING
     getNumbers();
     if(acc_x >= -2.0 && acc_x <= 2.0 && acc_y >= -2.0 && acc_y <= 2.0 && acc_z > 7.0 && acc_z < 11.5) {
         delay(1000);
@@ -146,6 +152,7 @@ void loop() {
   Serial.println("Begin opening hand as far as possible and hold until prompted...");
   float x1_ave,y1_ave,z1_ave,x2_ave,y2_ave,z2_ave,x3_ave,y3_ave,z3_ave,x4_ave,y4_ave,z4_ave,x5_ave,y5_ave,z5_ave,xc_ave,yc_ave,zc_ave,xp_ave,yp_ave,zp_ave;
   delay(7000);
+  //This averages the final position of the hand after 7 seconds of straining to open
   for(int j = 0; j < 10; j++) {
       getNumbers();
       x1_ave += ac1_x;
@@ -207,6 +214,7 @@ void loop() {
   
   Serial.println("Done finding values, you may relex hand");
   delay(1000);
+  //Code below can be uncommented for extra information on each use.
 /*
   Serial.println("Thumb:");
   Serial.println("Average x value");
@@ -270,42 +278,41 @@ void loop() {
   Serial.println("Percent Range of Motion per Finger starting with thumb");
     
     Serial.println("Thumb ");
-  Serial.println(String(z1_ave));
+  Serial.println((z1_ave));
   
     Serial.println("Index %");
-  Serial.println(String(z2_ave));
+  Serial.println((z2_ave));
   
     Serial.println("Middle %");
-  Serial.println(String(z3_ave));
+  Serial.println((z3_ave));
   
     Serial.println("Ring %");
-  Serial.println(String(z4_ave));
+  Serial.println((z4_ave));
   
     Serial.println("Small %");
-  Serial.println(String(z5_ave));
+  Serial.println((z5_ave));
 
 
-
-
-  //PERFORM CALCULATION TO FIND ANGLE (lol)
-
-  //Serial.println("If average z value is less than ~9.8 full motion is assumed for all fingers excluding thumb");
-  //Serial.println("Z value for thumb should be ~ 0 and x (or y can't recall) should be approximately 9.81");
+  Serial.println("If average z value is less than ~9.8 full motion is assumed for all fingers excluding thumb");
+  Serial.println("Z value for thumb should be ~ 0 and x (or y can't recall) should be approximately 9.81");
 
   //WAIT TO RESTART SKETCH
+
+  //This block works to restart sketch but doesn't reset variables.
+  /*
   while (Serial.available() && Serial.read()); // empty buffer
   while (!Serial.available()){
     //Serial.println(F("Send any character to restart detection.\n"));
     delay(9500);
   }               
   while (Serial.available() && Serial.read()); // empty buffer again
-
+*/
   
 }
 
 
 void getNumbers() {
-  //emg = analogRead(A1);
+  emg = analogRead(A1);
   /*Serial.println("EMG Reading: ");
   Serial.println(emg);*/
   //Serial.println("Entering getNumbers()");

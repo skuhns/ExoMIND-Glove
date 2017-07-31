@@ -1,10 +1,16 @@
 //Example code for configuring 6 seperate MPU6050 accelerometers
-/* Author(s): SRIRAM BOPPANA, Jason Ummel
+/* Author(s): SRIRAM BOPPANA, Jason Ummel, Samuel Kuhns
 *  Date: 02/19/2017
 *  This code is based off the Jeff Rowberg I2Cdev.h and MPU6050.h library files
 *  This code has not been tested and is only for reference
 *
  */
+ 
+ /*
+  * Offsets must be set before each reading
+  * Sensors are set to high and low via the AD0 pin because SCL and SDA are in series.
+  * This code is best used to test the readings of all the sensors simultaneously
+  */
 
  /*
   * Offsets for individual MIND MPU's are as follows
@@ -127,13 +133,20 @@ Serial.println("Testing device connections...");
 }
  
 void loop() {
- 
+  
+//EMG Reading is completely optional and will be stored/implemented later. 
   emg = analogRead(A1);
   //Serial.println("EMG Reading");
   //Serial.println(emg);
   delay(5);
+
+ /*
+  * Offsets must be set before each reading
+  * Sensors are set to high and low via the AD0 pin because SCL and SDA are in series.
+  * This code is best used to test the readings of all the sensors simultaneously
+  */
   
-  for (int c = 1; c <= 7; c++){                            //alter this depending on how many we are reading in (we want 6 eventually)
+  for (int c = 1; c <= 7; c++){
     //Reset the address of all devices
     digitalWrite(MPU6050_central,HIGH);
     digitalWrite(MPU6050_palm,HIGH);
