@@ -62,7 +62,7 @@
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
   #include "Wire.h"
 #endif
-//#include <SoftwareSerial.h> // added to try and solve issues
+#include <SoftwareSerial.h> // added to try and solve issues
 #define OUTPUT_READABLE_ACCELGYRO
  
 /*Declare digital pins to connect to AD0 pin on MPU6050*/
@@ -99,10 +99,10 @@ void setup() {
 
  
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-        Wire.begin();
-    #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-        Fastwire::setup(400, true);
-    #endif
+      Wire.begin();
+   #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
+       Fastwire::setup(400, true);
+   #endif
  
   Serial.begin(38400);
  
@@ -134,8 +134,8 @@ Serial.println("Testing device connections...");
 void loop() {
   
 //EMG Reading is completely optional and will be stored/implemented later. 
-  emg = analogRead(A1);
-  //Serial.println("EMG Reading");
+  //emg = analogRead(A1);
+  Serial.println("EMG Reading");
   //Serial.println(emg);
   delay(5);
 
