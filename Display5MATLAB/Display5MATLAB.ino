@@ -76,7 +76,7 @@ int state = 0;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 int16_t ac1_x, ac1_y, ac1_z, ac2_x, ac2_y, ac2_z, ac3_x, ac3_y, ac3_z, ac4_x, ac4_y, ac4_z, ac5_x, ac5_y, ac5_z, acc_x, acc_y, acc_z, acp_x, acp_y, acp_z;
-
+int emg= 622;
  
 // Declare I2C device with corresponding address
 MPU6050 accelgyroIC1(0x68); // default I2C address 0x69 when inactive HIGH   //don't I need to have 2 declared???
@@ -96,7 +96,7 @@ accelgyroIC1.initialize(); //default I2C address 0x68 when active LOW
 accelgyroIC2.initialize(); // default I2C address 0x68 when inactive HIGH  
 
 // Verify Connection
-//Serial.println("Testing device connections...");
+Serial.println("Testing device connections...");
  
  
   pinMode(MPU6050_central,OUTPUT);
@@ -106,7 +106,8 @@ accelgyroIC2.initialize(); // default I2C address 0x68 when inactive HIGH
   pinMode(MPU6050_4,OUTPUT);
   pinMode(MPU6050_5,OUTPUT);
   pinMode(MPU6050_6,OUTPUT);
-  delay(3500);
+  pinMode(A1,INPUT);
+  delay(500);
 }
 
  
@@ -128,14 +129,16 @@ void loop() {
   Serial.print(" ");
   Serial.print(ac4_z); 
   Serial.print(" ");
-  Serial.println(ac5_z);
+  Serial.print(ac5_z);
+  Serial.print(" ");
+  Serial.println(emg);
   delay(5);
 }
 
 
 void getNumbers() {
-
-  for (int c = 1; c <= 7; c++){                            //alter this depending on how many we are reading in (we want 6 eventually)
+  emg = analogRead(A1);
+  for (int c = 1; c <= 7; c++){
     //Reset the address of all devices
     digitalWrite(MPU6050_central,HIGH);
     digitalWrite(MPU6050_palm,HIGH);
@@ -145,7 +148,7 @@ void getNumbers() {
     digitalWrite(MPU6050_5,HIGH);
     digitalWrite(MPU6050_6,HIGH);
   
-    delay(10);
+    delay(15);
     if (c == 1){
       digitalWrite(MPU6050_central,LOW);// set MPU6050 # 1 as the device being read
       delay(15);
@@ -160,22 +163,22 @@ void getNumbers() {
     }
     else if (c == 2){
       digitalWrite(MPU6050_2,LOW);// set MPU6050 # 2 as the device being read
-      delay(10);
+      delay(15);
 
-      accelgyroIC1.setXAccelOffset(-1388);
-      accelgyroIC1.setYAccelOffset(-1390); 
-      accelgyroIC1.setZAccelOffset(1613);
+      accelgyroIC1.setXAccelOffset(1589);
+      accelgyroIC1.setYAccelOffset(-1343); 
+      accelgyroIC1.setZAccelOffset(830);
 
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       //Serial.println("Accelerometer 2");
     }
    else if (c == 3){
     digitalWrite(MPU6050_3,LOW);// set MPU6050 # 3 as the device being read
-      delay(10);
+      delay(15);
       
-      accelgyroIC1.setXAccelOffset(-3531);
-      accelgyroIC1.setYAccelOffset(-6565); 
-      accelgyroIC1.setZAccelOffset(1717);
+      accelgyroIC1.setXAccelOffset(-1309);
+      accelgyroIC1.setYAccelOffset(-1403); 
+      accelgyroIC1.setZAccelOffset(1660);
     
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       //Serial.println("Accelerometer 3");
@@ -183,40 +186,40 @@ void getNumbers() {
   }
   else if (c == 4){
     digitalWrite(MPU6050_4,LOW);// set MPU6050 # 4 as the device being read
-      delay(10);
+      delay(15);
   
-      accelgyroIC1.setXAccelOffset(-1563);
-      accelgyroIC1.setYAccelOffset(-257); 
-      accelgyroIC1.setZAccelOffset(1602);
+      accelgyroIC1.setXAccelOffset(-12563);
+      accelgyroIC1.setYAccelOffset(-2227); 
+      accelgyroIC1.setZAccelOffset(12542);
      
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       //Serial.println("Accelerometer 4");
   }
   else if (c == 5){
     digitalWrite(MPU6050_5,LOW);// set MPU6050 # 5 as the device being read
-    delay(10);
+    delay(15);
 
-    accelgyroIC1.setXAccelOffset(-1195);
-    accelgyroIC1.setYAccelOffset(734); 
-    accelgyroIC1.setZAccelOffset(1016);
+      accelgyroIC1.setXAccelOffset(-195);
+      accelgyroIC1.setYAccelOffset(734); 
+      accelgyroIC1.setZAccelOffset(-100);
    
     accelgyroIC1.getAcceleration(&ax,&ay,&az);
     //Serial.println("Accelerometer 5");
   }
     else if (c == 6){
     digitalWrite(MPU6050_6,LOW);// set MPU6050 # 5 as the device being read
-      delay(10);
+      delay(15);
 
-      accelgyroIC1.setXAccelOffset(-1662);
-      accelgyroIC1.setYAccelOffset(-1299); 
-      accelgyroIC1.setZAccelOffset(818);
+      accelgyroIC1.setXAccelOffset(-1011);
+      accelgyroIC1.setYAccelOffset(688); 
+      accelgyroIC1.setZAccelOffset(905);
       
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       //Serial.println("Accelerometer 6");
   }
   else if (c == 7){
     digitalWrite(MPU6050_palm,LOW);// set MPU6050 # 5 as the device being read
-      delay(10);
+     delay(15);
 
       accelgyroIC1.setXAccelOffset(-836);
       accelgyroIC1.setYAccelOffset(-2474); 
@@ -224,8 +227,7 @@ void getNumbers() {
       
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       //Serial.println("Accelerometer Palm");
-  }  
- 
+  }
   // THIS ADJUSTS RAW VALUES TO GIVE m/s^2// (we probably just want angles in final output)
   switch(c) {
     case 1:
@@ -294,7 +296,7 @@ void getNumbers() {
   Serial.println(ac_z);
   */
   
-  delay(10); //10 microsecond delay to prevent simultaneous reading and writing on I2C bus
+  //delay(10); //10 microsecond delay to prevent simultaneous reading and writing on I2C bus
   }
 }
 

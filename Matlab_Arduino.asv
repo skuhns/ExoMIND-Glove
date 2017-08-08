@@ -1,0 +1,74 @@
+function Matlab_Arduino(sampleNumber)
+
+%Matlab + Arduino Serial Communication
+%Author: Mario Perez Esteso (modified by MIND)
+y = zeros(1, 1000);
+
+%Initialize serial port
+delete(instrfind({'Port'}, {'COM6'}));
+serialPort = serial('COM6'); %insert actual com port
+serialPort.Baud = 38400; %baud rate
+warning('off', 'MATLAB:serial:fscanf:UnsuccessfulRead');
+B = Bluetooth('19B10010-E8F2-537E-4F6C-D104768A1214',1);
+%open the serial port
+fopen(B);
+    print(fscanf(B, '%f'));
+% 
+% %declare a counter
+% counter = 1;
+% 
+% %Create a graph
+% figure(1)
+% subplot(2, 1, 1)
+% hold on;
+% title('Accelerometer Data')
+% ylabel('Percent Extension');
+% ylim([0 100]); %set y limit for accelerometer data
+% grid on;
+% hold off;
+% 
+% subplot(2, 1, 2)
+% hold on;
+% title('EMG Data')
+% xlabel('Time');
+% ylabel('Constriction Strength');
+% ylim([-255 255]); %set y limit for EMG
+% grid on;
+% hold off;
+% 
+% while counter <= sampleNumber
+%     
+%     x(counter, :) = fscanf(B, '%f %f %f %f %f %f', [1,6]);
+%     subplot(2, 1, 1)
+%     bar(x(counter, 1:5))
+%     title('Accelerometer Data')
+%     ylabel('Percent Extension');
+%     ylim([0 100]); %set y limit for accelerometer data
+%     grid on;
+%     drawnow
+%     
+%     subplot(2, 1, 2)
+%     hold on;
+%     plot(x(counter, 6))
+%     title('EMG Data')
+%     xlabel('Time');
+%     ylabel('Muscle Activity');
+%     xlim([counter-20 counter+5]);
+%     ylim([0 1024]); %set y limit for EMG
+%     grid on;
+%     hold off;
+% %     plot(counter, x(counter, 1), 'X-r');
+% %     plot(counter, x(counter, 2), 'X-b');
+% %     plot(counter, x(counter, 3), 'X-g');
+%     drawnow
+%     
+%     counter = counter + 1;
+% end
+
+fclose(B);
+delete(B);
+
+
+end
+
+    

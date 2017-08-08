@@ -23,30 +23,32 @@
   * 
   * 
   * MPU 1
-      accelgyroIC1.setXAccelOffset(-1388);
-      accelgyroIC1.setYAccelOffset(-1390); 
-      accelgyroIC1.setZAccelOffset(1613);
+  * 1589  -1343 830
+      accelgyroIC1.setXAccelOffset(1589);
+      accelgyroIC1.setYAccelOffset(-1343); 
+      accelgyroIC1.setZAccelOffset(830);
   * 
   * 
   * MPU 2
-      accelgyroIC1.setXAccelOffset(-3531);
-      accelgyroIC1.setYAccelOffset(-6565); 
-      accelgyroIC1.setZAccelOffset(1717);
+  * -1309  -1403 1660  
+      accelgyroIC1.setXAccelOffset(-1309);
+      accelgyroIC1.setYAccelOffset(-1403); 
+      accelgyroIC1.setZAccelOffset(1660);
 
     MPU 3
-      accelgyroIC1.setXAccelOffset(-1563);
-      accelgyroIC1.setYAccelOffset(-257); 
-      accelgyroIC1.setZAccelOffset(1602);
+      accelgyroIC1.setXAccelOffset(-12563);
+      accelgyroIC1.setYAccelOffset(-2227); 
+      accelgyroIC1.setZAccelOffset(12542);
 
     MPU 4
-      accelgyroIC1.setXAccelOffset(-1195);
+      accelgyroIC1.setXAccelOffset(-195);
       accelgyroIC1.setYAccelOffset(734); 
-      accelgyroIC1.setZAccelOffset(1016);
-
+      accelgyroIC1.setZAccelOffset(-100);
+-1011  668 905
     MPU 5
-      accelgyroIC1.setXAccelOffset(-1662);
-      accelgyroIC1.setYAccelOffset(-1299); 
-      accelgyroIC1.setZAccelOffset(818);
+      accelgyroIC1.setXAccelOffset(-1011);
+      accelgyroIC1.setYAccelOffset(688); 
+      accelgyroIC1.setZAccelOffset(905);
 
     MPU Palm (with white velcro)
       accelgyroIC1.setXAccelOffset(-836);
@@ -59,6 +61,7 @@
 #include "I2Cdev.h"
 #include "MPU6050.h"
 #include "math.h"
+#include "CurieIMU.h"
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
   #include "Wire.h"
 #endif
@@ -104,7 +107,7 @@ void setup() {
        Fastwire::setup(400, true);
    #endif
  
-  Serial.begin(38400);
+  Serial.begin(19200);
  
 accelgyroIC1.initialize(); //default I2C address 0x68 when active LOW
 accelgyroIC2.initialize(); // default I2C address 0x68 when inactive HIGH  
@@ -134,9 +137,9 @@ Serial.println("Testing device connections...");
 void loop() {
   
 //EMG Reading is completely optional and will be stored/implemented later. 
-  //emg = analogRead(A1);
-  Serial.println("EMG Reading");
-  //Serial.println(emg);
+  emg = analogRead(A1);
+  Serial.print("EMG Reading: ");
+  Serial.println(emg);
   delay(5);
 
  /*
@@ -172,9 +175,9 @@ void loop() {
       digitalWrite(MPU6050_2,LOW);// set MPU6050 # 2 as the device being read
       delay(15);
 
-      accelgyroIC1.setXAccelOffset(-1388);
-      accelgyroIC1.setYAccelOffset(-1390); 
-      accelgyroIC1.setZAccelOffset(1613);
+      accelgyroIC1.setXAccelOffset(1589);
+      accelgyroIC1.setYAccelOffset(-1343); 
+      accelgyroIC1.setZAccelOffset(830);
 
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       Serial.println("Accelerometer 2");
@@ -183,9 +186,9 @@ void loop() {
     digitalWrite(MPU6050_3,LOW);// set MPU6050 # 3 as the device being read
       delay(15);
       
-      accelgyroIC1.setXAccelOffset(-3531);
-      accelgyroIC1.setYAccelOffset(-6565); 
-      accelgyroIC1.setZAccelOffset(1717);
+      accelgyroIC1.setXAccelOffset(-1309);
+      accelgyroIC1.setYAccelOffset(-1403); 
+      accelgyroIC1.setZAccelOffset(1660);
     
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       Serial.println("Accelerometer 3");
@@ -195,9 +198,9 @@ void loop() {
     digitalWrite(MPU6050_4,LOW);// set MPU6050 # 4 as the device being read
       delay(15);
   
-      accelgyroIC1.setXAccelOffset(-1563);
-      accelgyroIC1.setYAccelOffset(-257); 
-      accelgyroIC1.setZAccelOffset(1602);
+      accelgyroIC1.setXAccelOffset(-12563);
+      accelgyroIC1.setYAccelOffset(-2227); 
+      accelgyroIC1.setZAccelOffset(12542);
      
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       Serial.println("Accelerometer 4");
@@ -206,9 +209,9 @@ void loop() {
     digitalWrite(MPU6050_5,LOW);// set MPU6050 # 5 as the device being read
     delay(15);
 
-    accelgyroIC1.setXAccelOffset(-1195);
-    accelgyroIC1.setYAccelOffset(734); 
-    accelgyroIC1.setZAccelOffset(1016);
+      accelgyroIC1.setXAccelOffset(-195);
+      accelgyroIC1.setYAccelOffset(734); 
+      accelgyroIC1.setZAccelOffset(-100);
    
     accelgyroIC1.getAcceleration(&ax,&ay,&az);
     Serial.println("Accelerometer 5");
@@ -217,9 +220,9 @@ void loop() {
     digitalWrite(MPU6050_6,LOW);// set MPU6050 # 5 as the device being read
       delay(15);
 
-      accelgyroIC1.setXAccelOffset(-1662);
-      accelgyroIC1.setYAccelOffset(-1299); 
-      accelgyroIC1.setZAccelOffset(818);
+      accelgyroIC1.setXAccelOffset(-1011);
+      accelgyroIC1.setYAccelOffset(688); 
+      accelgyroIC1.setZAccelOffset(905);
       
       accelgyroIC1.getAcceleration(&ax,&ay,&az);
       Serial.println("Accelerometer 6");
