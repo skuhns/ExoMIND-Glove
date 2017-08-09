@@ -57,6 +57,7 @@
 #include "MPU6050.h"
 #include "math.h"
 #include "Wire.h"
+#include "CurieIMU.h"
 
 //#include <SoftwareSerial.h> // added to try and solve issues
 #define OUTPUT_READABLE_ACCELGYRO
@@ -247,7 +248,7 @@ void getNumbers() {
       //Serial.println(ac1_z);
       break;
   case 3:
-      ac2_x = (ax/16384.00)*9.81;
+      ac  2_x = (ax/16384.00)*9.81;
       ac2_y = (ay/16384.00)*9.81;
       ac2_z = (az/16384.00)*9.81;
       //Serial.println(ac2_x);

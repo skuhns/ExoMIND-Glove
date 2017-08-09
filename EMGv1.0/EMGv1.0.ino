@@ -1,12 +1,14 @@
 //DIY EMG TESTER
 #include "math.h"
 #include "Wire.h"
+//#include "CurieIMU.h"
 
 
 int emg;
 
 void setup() {
   // put your setup code here, to run once:
+  Wire.begin();
   pinMode(A1,INPUT);
   delay(5);
   Serial.begin(9600);
