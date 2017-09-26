@@ -57,7 +57,7 @@
 #include "MPU6050.h"
 #include "math.h"
 #include "Wire.h"
-#include "CurieIMU.h"
+//#include "CurieIMU.h"
 
 //#include <SoftwareSerial.h> // added to try and solve issues
 #define OUTPUT_READABLE_ACCELGYRO
@@ -115,11 +115,27 @@ Serial.println("Testing device connections...");
 void loop() {
   getNumbers();
 
-  ac1_z = ((ac1_z+9.81)/9.81) * 100.0;
-  ac2_z = ((ac2_z+9.81)/9.81) * 100.0;
-  ac3_z = ((ac3_z+9.81)/9.81) * 100.0;
-  ac4_z = ((ac4_z+9.81)/9.81) * 100.0;
-  ac5_z = ((ac5_z+9.81)/9.81) * 100.0;
+  ac1_z = ((ac1_z+9.91)/9.81) * 100.0;
+  ac2_z = ((ac2_z+9.91)/9.81) * 100.0;
+  ac3_z = ((ac3_z+9.91)/9.81) * 100.0;
+  ac4_z = ((ac4_z+9.91)/9.81) * 100.0;
+  ac5_z = ((ac5_z+9.91)/9.81) * 100.0;
+
+  if(ac1_z < 0) {
+    ac1_z = 0;
+  }
+    if(ac2_z < 0) {
+    ac2_z = 0;
+  }
+    if(ac3_z < 0) {
+    ac3_z = 0;
+  }
+    if(ac4_z < 0) {
+    ac4_z = 0;
+  }
+    if(ac5_z < 0) {
+    ac5_z = 0;
+  }
 
   
   Serial.print(ac1_z); 
@@ -248,7 +264,7 @@ void getNumbers() {
       //Serial.println(ac1_z);
       break;
   case 3:
-      ac  2_x = (ax/16384.00)*9.81;
+      ac2_x = (ax/16384.00)*9.81;
       ac2_y = (ay/16384.00)*9.81;
       ac2_z = (az/16384.00)*9.81;
       //Serial.println(ac2_x);

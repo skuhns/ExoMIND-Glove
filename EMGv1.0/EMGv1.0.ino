@@ -4,7 +4,7 @@
 //#include "CurieIMU.h"
 
 
-int emg;
+int emg=0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -18,9 +18,9 @@ void setup() {
 
 void loop() {
   emg = analogRead(A1);
-  //Serial.print("EMG:");
+  Serial.print("EMG:");
   Serial.println(emg);
-  delay(10);
+  delay(300);
   // put your main code here, to run repeatedly:
 
 }
